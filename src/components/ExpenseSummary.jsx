@@ -53,7 +53,7 @@ const ExpenseSummary = ({ expenses, budget, onSetBudget }) => {
                 <div className="glass-dark rounded-2xl p-6 md:p-8 animate-fade-in overflow-hidden relative">
                     {/* Background gradient based on budget status */}
                     <div
-                        className={`absolute inset-0 opacity-10 ${remaining < 0
+                        className={`absolute inset-0 opacity-10 {remaining < 0
                                 ? 'bg-gradient-to-br from-red-500 to-pink-500'
                                 : remaining < budget * 0.2
                                     ? 'bg-gradient-to-br from-yellow-500 to-orange-500'
@@ -88,12 +88,12 @@ const ExpenseSummary = ({ expenses, budget, onSetBudget }) => {
                             </div>
 
                             {/* Remaining */}
-                            <div className={`bg-white bg-opacity-10 rounded-xl p-4 backdrop-blur-sm ${remaining < 0 ? 'ring-2 ring-red-400' : ''
+                            <div className={`bg-white bg-opacity-10 rounded-xl p-4 backdrop-blur-sm {remaining < 0 ? 'ring-2 ring-red-400' : ''
                                 }`}>
                                 <p className="text-black text-sm font-medium mb-1">
                                     {remaining < 0 ? 'Over Budget' : 'Remaining'}
                                 </p>
-                                <div className={`text-3xl font-bold ${remaining < 0 ? 'text-red-300' : 'text-black'
+                                <div className={`text-3xl font-bold {remaining < 0 ? 'text-red-300' : 'text-black'
                                     }`}>
                                     {formatAmount(Math.abs(remaining))}
                                 </div>
@@ -110,13 +110,13 @@ const ExpenseSummary = ({ expenses, budget, onSetBudget }) => {
                             </div>
                             <div className="h-4 bg-white bg-opacity-20 rounded-full overflow-hidden">
                                 <div
-                                    className={`h-full transition-all duration-1000 ease-out ${percentageUsed > 100
+                                    className={`h-full transition-all duration-1000 ease-out {percentageUsed > 100
                                             ? 'bg-gradient-to-r from-red-500 to-pink-500'
                                             : percentageUsed > 80
                                                 ? 'bg-gradient-to-r from-yellow-500 to-orange-500'
                                                 : 'bg-gradient-to-r from-green-400 to-emerald-500'
                                         }`}
-                                    style={{ width: `${Math.min(percentageUsed, 100)}%` }}
+                                    style={{ width: `{Math.min(percentageUsed, 100)}%` }}
                                 ></div>
                             </div>
                         </div>
