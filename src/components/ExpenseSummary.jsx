@@ -5,9 +5,10 @@ const ExpenseSummary = ({ expenses, budget, onSetBudget }) => {
     const percentageUsed = budget > 0 ? (total / budget) * 100 : 0;
 
     const formatAmount = (amount) => {
-        return new Intl.NumberFormat('en-US', {
+        return new Intl.NumberFormat('en-IN', {
             style: 'currency',
-            currency: 'USD',
+            currency: 'INR',
+            currencyDisplay: 'symbol',
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
         }).format(amount);
@@ -51,18 +52,19 @@ const ExpenseSummary = ({ expenses, budget, onSetBudget }) => {
             {/* Budget Overview */}
             {budget > 0 && (
                 <div className="glass-dark rounded-2xl p-6 md:p-8 animate-fade-in overflow-hidden relative">
-                    {/* Background gradient based on budget status */}
+                    {/* Background gradient */}
                     <div
-                        className={`absolute inset-0 opacity-10 ${remaining < 0
+                        className={`absolute inset-0 opacity-10 ${
+                            remaining < 0
                                 ? 'bg-gradient-to-br from-red-500 to-pink-500'
                                 : remaining < budget * 0.2
-                                    ? 'bg-gradient-to-br from-yellow-500 to-orange-500'
-                                    : 'bg-gradient-to-br from-green-500 to-emerald-500'
-                            }`}
+                                ? 'bg-gradient-to-br from-yellow-500 to-orange-500'
+                                : 'bg-gradient-to-br from-green-500 to-emerald-500'
+                        }`}
                     ></div>
 
                     <div className="relative z-10">
-                        {/* Header with Reset Budget */}
+                        {/* Header */}
                         <div className="flex items-center justify-between mb-6">
                             <h2 className="text-2xl font-bold text-black">Budget Overview</h2>
                             <button
@@ -73,28 +75,31 @@ const ExpenseSummary = ({ expenses, budget, onSetBudget }) => {
                             </button>
                         </div>
 
-                        {/* Budget Stats Grid */}
+                        {/* Budget Stats */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                            {/* Initial Budget */}
                             <div className="bg-white bg-opacity-10 rounded-xl p-4 backdrop-blur-sm">
                                 <p className="text-black text-sm font-medium mb-1">Initial Budget</p>
                                 <div className="text-3xl font-bold text-black">{formatAmount(budget)}</div>
                             </div>
 
-                            {/* Total Spent */}
                             <div className="bg-white bg-opacity-10 rounded-xl p-4 backdrop-blur-sm">
                                 <p className="text-black text-sm font-medium mb-1">Total Spent</p>
                                 <div className="text-3xl font-bold text-black">{formatAmount(total)}</div>
                             </div>
 
-                            {/* Remaining */}
-                            <div className={`bg-white bg-opacity-10 rounded-xl p-4 backdrop-blur-sm ${remaining < 0 ? 'ring-2 ring-red-400' : ''
-                                }`}>
+                            <div
+                                className={`bg-white bg-opacity-10 rounded-xl p-4 backdrop-blur-sm ${
+                                    remaining < 0 ? 'ring-2 ring-red-400' : ''
+                                }`}
+                            >
                                 <p className="text-black text-sm font-medium mb-1">
                                     {remaining < 0 ? 'Over Budget' : 'Remaining'}
                                 </p>
-                                <div className={`text-3xl font-bold ${remaining < 0 ? 'text-red-300' : 'text-black'
-                                    }`}>
+                                <div
+                                    className={`text-3xl font-bold ${
+                                        remaining < 0 ? 'text-red-300' : 'text-black'
+                                    }`}
+                                >
                                     {formatAmount(Math.abs(remaining))}
                                 </div>
                             </div>
@@ -110,12 +115,13 @@ const ExpenseSummary = ({ expenses, budget, onSetBudget }) => {
                             </div>
                             <div className="h-4 bg-white bg-opacity-20 rounded-full overflow-hidden">
                                 <div
-                                    className={`h-full transition-all duration-1000 ease-out ${percentageUsed > 100
+                                    className={`h-full transition-all duration-1000 ease-out ${
+                                        percentageUsed > 100
                                             ? 'bg-gradient-to-r from-red-500 to-pink-500'
                                             : percentageUsed > 80
-                                                ? 'bg-gradient-to-r from-yellow-500 to-orange-500'
-                                                : 'bg-gradient-to-r from-green-400 to-emerald-500'
-                                        }`}
+                                            ? 'bg-gradient-to-r from-yellow-500 to-orange-500'
+                                            : 'bg-gradient-to-r from-green-400 to-emerald-500'
+                                    }`}
                                     style={{ width: `${Math.min(percentageUsed, 100)}%` }}
                                 ></div>
                             </div>
@@ -127,6 +133,7 @@ const ExpenseSummary = ({ expenses, budget, onSetBudget }) => {
                                 <p className="text-black text-xs font-medium mb-1">Transactions</p>
                                 <div className="text-2xl font-bold text-black">{count}</div>
                             </div>
+
                             {count > 0 && (
                                 <div className="text-center">
                                     <p className="text-black text-xs font-medium mb-1">Average</p>
@@ -135,6 +142,7 @@ const ExpenseSummary = ({ expenses, budget, onSetBudget }) => {
                                     </div>
                                 </div>
                             )}
+
                             {remaining < 0 && (
                                 <div className="text-center">
                                     <p className="text-red-300 text-xs font-medium mb-1">⚠️ Alert</p>
