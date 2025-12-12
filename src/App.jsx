@@ -92,7 +92,7 @@ function App() {
         {/* Header */}
         <header className="text-center mb-12 animate-fade-in">
   <h1 className="text-5xl md:text-6xl font-extrabold text-black mb-3 drop-shadow-lg">
-    💰 Expense Tracker
+    💰 thala tha
   </h1>
 
   {/* Added Image */}
@@ -103,7 +103,7 @@ function App() {
   />
 
   <p className="text-black text-lg md:text-xl font-medium opacity-90">
-    Track your spending, manage your budget
+    praveen tha enga mass
   </p>
 </header>
 
