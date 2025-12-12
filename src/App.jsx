@@ -3,6 +3,8 @@ import ExpenseForm from './components/ExpenseForm';
 import ExpenseList from './components/ExpenseList';
 import ExpenseFilter from './components/ExpenseFilter';
 import ExpenseSummary from './components/ExpenseSummary';
+import praveenImg from './assets/praveen.jpg';
+
 import { loadExpenses, saveExpenses, loadBudget, saveBudget } from './utils/storage';
 
 function App() {
@@ -89,13 +91,22 @@ function App() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <header className="text-center mb-12 animate-fade-in">
-          <h1 className="text-5xl md:text-6xl font-extrabold text-black mb-3 drop-shadow-lg">
-            💰 Expense Tracker
-          </h1>
-          <p className="text-black text-lg md:text-xl font-medium opacity-90">
-            Track your spending, manage your budget
-          </p>
-        </header>
+  <h1 className="text-5xl md:text-6xl font-extrabold text-black mb-3 drop-shadow-lg">
+    💰 Expense Tracker
+  </h1>
+
+  {/* Added Image */}
+  <img
+    src={praveenImg}
+    alt="Praveen"
+    className="mx-auto w-40 h-40 object-cover rounded-full shadow-lg mb-4"
+  />
+
+  <p className="text-black text-lg md:text-xl font-medium opacity-90">
+    Track your spending, manage your budget
+  </p>
+</header>
+
 
         {/* Summary */}
         <ExpenseSummary
