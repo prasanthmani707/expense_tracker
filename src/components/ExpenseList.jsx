@@ -13,7 +13,7 @@ const ExpenseList = ({ expenses, onDeleteExpense }) => {
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
-        return date.toLocaleDateString('en-US', {
+        return date.toLocaleDateString('en-IN', {
             year: 'numeric',
             month: 'short',
             day: 'numeric'
@@ -21,9 +21,12 @@ const ExpenseList = ({ expenses, onDeleteExpense }) => {
     };
 
     const formatAmount = (amount) => {
-        return new Intl.NumberFormat('en-US', {
+        return new Intl.NumberFormat('en-IN', {
             style: 'currency',
-            currency: 'USD'
+            currency: 'INR',
+            currencyDisplay: 'symbol',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
         }).format(amount);
     };
 

@@ -1,8 +1,13 @@
+import { useState } from "react";
+
 const ExpenseSummary = ({ expenses, budget, onSetBudget }) => {
     const total = expenses.reduce((sum, expense) => sum + expense.amount, 0);
     const remaining = budget - total;
     const count = expenses.length;
     const percentageUsed = budget > 0 ? (total / budget) * 100 : 0;
+    const [showAddMoney, setShowAddMoney] = useState(false);
+
+
 
     const formatAmount = (amount) => {
         return new Intl.NumberFormat('en-IN', {
@@ -22,6 +27,18 @@ const ExpenseSummary = ({ expenses, budget, onSetBudget }) => {
             e.target.reset();
         }
     };
+
+    const handleAddMoney = (e) => {
+    e.preventDefault();
+    const extra = parseFloat(e.target.extraAmount.value);
+
+    if (extra > 0) {
+        onSetBudget(budget + extra);
+        setShowAddMoney(false);
+        e.target.reset();
+    }
+};
+
 
     return (
         <div className="space-y-6 mb-8">
@@ -54,26 +71,55 @@ const ExpenseSummary = ({ expenses, budget, onSetBudget }) => {
                 <div className="glass-dark rounded-2xl p-6 md:p-8 animate-fade-in overflow-hidden relative">
                     {/* Background gradient */}
                     <div
-                        className={`absolute inset-0 opacity-10 ${
-                            remaining < 0
-                                ? 'bg-gradient-to-br from-red-500 to-pink-500'
-                                : remaining < budget * 0.2
+                        className={`absolute inset-0 opacity-10 ${remaining < 0
+                            ? 'bg-gradient-to-br from-red-500 to-pink-500'
+                            : remaining < budget * 0.2
                                 ? 'bg-gradient-to-br from-yellow-500 to-orange-500'
                                 : 'bg-gradient-to-br from-green-500 to-emerald-500'
-                        }`}
+                            }`}
                     ></div>
 
                     <div className="relative z-10">
                         {/* Header */}
                         <div className="flex items-center justify-between mb-6">
                             <h2 className="text-2xl font-bold text-black">Budget Overview</h2>
-                            <button
-                                onClick={() => onSetBudget(0)}
-                                className="px-4 py-2 bg-white bg-opacity-20 hover:bg-opacity-30 text-black text-sm font-medium rounded-lg transition-all duration-300"
-                            >
-                                Reset Budget
-                            </button>
+                            <div className="flex gap-3">
+                                <button
+                                   onClick={() => setShowAddMoney(!showAddMoney)}
+
+
+                                    className="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition-all duration-300"
+                                >
+                                    Add Many
+                                </button>
+                                <button
+                                    onClick={() => onSetBudget(0)}
+                                    className="px-4 py-2 bg-white bg-opacity-20 hover:bg-opacity-30 text-black text-sm font-medium rounded-lg transition-all duration-300"
+                                >
+                                    Reset Budget
+                                </button>
+                            </div>
+
                         </div>
+                        {showAddMoney && (
+                            <form onSubmit={handleAddMoney} className="flex gap-3 mb-4">
+                                <input
+                                    type="number"
+                                    name="extraAmount"
+                                    step="0.01"
+                                    min="0"
+                                    placeholder="Enter amount to add"
+                                    className="flex-1 px-4 py-3 rounded-xl border-2 border-slate-200 bg-white hover:border-purple-300 focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all duration-300"
+                                    required
+                                />
+                                <button
+                                    type="submit"
+                                    className="px-6 py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transform hover:scale-105 transition-all duration-300 shadow-lg"
+                                >
+                                    Add
+                                </button>
+                            </form>
+                        )}
 
                         {/* Budget Stats */}
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -88,17 +134,15 @@ const ExpenseSummary = ({ expenses, budget, onSetBudget }) => {
                             </div>
 
                             <div
-                                className={`bg-white bg-opacity-10 rounded-xl p-4 backdrop-blur-sm ${
-                                    remaining < 0 ? 'ring-2 ring-red-400' : ''
-                                }`}
+                                className={`bg-white bg-opacity-10 rounded-xl p-4 backdrop-blur-sm ${remaining < 0 ? 'ring-2 ring-red-400' : ''
+                                    }`}
                             >
                                 <p className="text-black text-sm font-medium mb-1">
                                     {remaining < 0 ? 'Over Budget' : 'Remaining'}
                                 </p>
                                 <div
-                                    className={`text-3xl font-bold ${
-                                        remaining < 0 ? 'text-red-300' : 'text-black'
-                                    }`}
+                                    className={`text-3xl font-bold ${remaining < 0 ? 'text-red-300' : 'text-black'
+                                        }`}
                                 >
                                     {formatAmount(Math.abs(remaining))}
                                 </div>
@@ -115,13 +159,12 @@ const ExpenseSummary = ({ expenses, budget, onSetBudget }) => {
                             </div>
                             <div className="h-4 bg-white bg-opacity-20 rounded-full overflow-hidden">
                                 <div
-                                    className={`h-full transition-all duration-1000 ease-out ${
-                                        percentageUsed > 100
-                                            ? 'bg-gradient-to-r from-red-500 to-pink-500'
-                                            : percentageUsed > 80
+                                    className={`h-full transition-all duration-1000 ease-out ${percentageUsed > 100
+                                        ? 'bg-gradient-to-r from-red-500 to-pink-500'
+                                        : percentageUsed > 80
                                             ? 'bg-gradient-to-r from-yellow-500 to-orange-500'
                                             : 'bg-gradient-to-r from-green-400 to-emerald-500'
-                                    }`}
+                                        }`}
                                     style={{ width: `${Math.min(percentageUsed, 100)}%` }}
                                 ></div>
                             </div>
